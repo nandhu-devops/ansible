@@ -1,0 +1,22 @@
+---
+#- hosts: all
+# become: yes
+# tasks:
+          - name: Download kibana debian
+            get_url:
+                    url: https://artifacts.elastic.co/downloads/kibana/kibana-6.1.1-amd64.deb
+                    dest: /home/ubuntu/kibana.deb
+
+          - name: install the .deb package 
+            apt:
+                    deb: '/home/ubuntu/kibana.deb'
+                    state: installed
+          - name: configure kibana file
+            lineinfile: path="/etc/kibana/kibana.yml" regexp="{{item.regexp}}" line="{{item.line}}" state=present backrefs=yes backup=yes
+            with_items:
+                    - { regexp: 'server.port', line: 'server.port: {{pl_kibana_port}}' }
+                    - { regexp: 'server.host', line: 'server.host: {{pl_kibana_host}}' }
+                      #   - { regexp: 'server.name', line: 'server.name: cluster1'}
+                    - { regexp: 'elasticsearch.url', line: 'elasticsearch.url: {{pl_elastic_url}}' }
+            notify: kibana restart
+

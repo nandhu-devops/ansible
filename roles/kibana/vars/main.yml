@@ -1,0 +1,7 @@
+---
+#pl_kibana_major_version : "{{kibana_major_version|default('6.x')}}"
+#pl_kibana_minor_version : "{{kibana_minor_version|default('6.1.1')}}"
+pl_kibana_port: "{{kibana_port | default('5601')}}"
+pl_kibana_host: "{{kibana_host | default('0.0.0.0')}}"
+pl_elastic_url: "{{elasticsearch.url | default('http://localhost:9200')}}"
+#kibana_index : "{{kibana_index|default('kibana')}}"
